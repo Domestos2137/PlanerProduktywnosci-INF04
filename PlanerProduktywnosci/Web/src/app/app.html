@@ -1,1 +1,8 @@
+<nav class="navbar navbar-dark bg-dark mb-4" *ngIf="isLoggedIn()">
+  <div class="container">
+    <span class="navbar-brand">Planer v1.0</span>
+    <button class="btn btn-outline-light btn-sm" (click)="logout()">Wyloguj</button>
+  </div>
+</nav>
+
 <router-outlet></router-outlet>

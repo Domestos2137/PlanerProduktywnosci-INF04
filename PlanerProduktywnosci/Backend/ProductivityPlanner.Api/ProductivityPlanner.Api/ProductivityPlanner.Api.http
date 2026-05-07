@@ -1,0 +1,6 @@
+@ProductivityPlanner.Api_HostAddress = http://localhost:5290
+
+GET {{ProductivityPlanner.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

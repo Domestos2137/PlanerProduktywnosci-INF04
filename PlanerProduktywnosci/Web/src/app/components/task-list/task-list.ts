@@ -37,14 +37,18 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  saveTask(): void {
-    if (this.newTask.title.trim()) {
-      this.taskService.addTask(this.newTask).subscribe(() => {
+saveTask(): void {
+  if (this.newTask.title.trim()) {
+    this.taskService.addTask(this.newTask).subscribe({
+      next: (savedTask) => {
         this.loadTasks(); 
-        this.resetForm(); 
-      });
-    }
+        this.resetForm();
+        console.log('Zadanie dodane!');
+      },
+      error: (err) => console.error('Błąd dodawania:', err)
+    });
   }
+}
 
   deleteTask(id: number | undefined): void {
     if (id && confirm('Czy na pewno chcesz usunąć to zadanie?')) {

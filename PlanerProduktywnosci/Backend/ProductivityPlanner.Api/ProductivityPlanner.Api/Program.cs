@@ -14,11 +14,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("DevPolicy", b =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        b.AllowAnyOrigin()
+         .AllowAnyMethod()
+         .AllowAnyHeader();
     });
 });
 
@@ -33,7 +33,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseRouting();
+
+app.UseCors("DevPolicy");
 
 app.UseAuthorization();
 

@@ -26,6 +26,10 @@
     </div>
   </div>
 
+    <div class="mb-3">
+    <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
+    </div>
+    
   <!-- LISTA ZADAŃ -->
   <div class="row">
     <div *ngFor="let task of tasks" class="col-md-6 col-lg-4 mb-3">

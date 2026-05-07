@@ -65,4 +65,13 @@ saveTask(): void {
   private resetForm(): void {
     this.newTask = { title: '', description: '', status: 'Nowe', priority: 'Normalny', category: 'Praca', createdAt: new Date() };
   }
+
+  searchText: string = '';
+
+  get filteredTasks() {
+    return this.tasks.filter(task => 
+      task.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      task.category.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
 }

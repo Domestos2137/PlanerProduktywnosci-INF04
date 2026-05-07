@@ -60,8 +60,12 @@ namespace ProductivityPlanner.Api.Controllers
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value!));
+            var tokenSection = _configuration.GetSection("AppSettings:Token").Value;
+            if (string.IsNullOrEmpty(tokenSection))
+            {
+                throw new Exception("Nie znaleziono klucza JWT w konfiguracji AppSettings:Token!");
+            }
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSection));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 

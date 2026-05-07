@@ -1,1 +1,24 @@
-<p>login works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Zaloguj się</h4>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Użytkownik</label>
+            <input type="text" class="form-control" [(ngModel)]="user.username">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hasło</label>
+            <input type="password" class="form-control" [(ngModel)]="user.password">
+          </div>
+          <button class="btn btn-primary w-100" (click)="login()">Zaloguj</button>
+          <hr>
+          <p class="text-center small">Nie masz konta? <a routerLink="/register">Zarejestruj się</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

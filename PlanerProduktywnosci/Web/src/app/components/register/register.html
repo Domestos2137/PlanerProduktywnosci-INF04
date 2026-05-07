@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0">Załóż konto</h4>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Nazwa użytkownika</label>
+            <input type="text" class="form-control" [(ngModel)]="newUser.username">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Hasło</label>
+            <input type="password" class="form-control" [(ngModel)]="newUser.password">
+          </div>
+          <button class="btn btn-success w-100" (click)="register()">Zarejestruj</button>
+          <hr>
+          <p class="text-center small">Masz już konto? <a routerLink="/login">Zaloguj się</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

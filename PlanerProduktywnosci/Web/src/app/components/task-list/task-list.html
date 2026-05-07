@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">📋 Planer Produktywności</h2>
+
+  <!-- FORMULARZ DODAWANIA -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-light"><strong>Dodaj nowe zadanie</strong></div>
+    <div class="card-body">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Tytuł zadania" [(ngModel)]="newTask.title">
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Opis" [(ngModel)]="newTask.description">
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" [(ngModel)]="newTask.category">
+            <option value="Praca">Praca</option>
+            <option value="Dom">Dom</option>
+            <option value="Inne">Inne</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success w-100" (click)="saveTask()">Zapisz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="mb-3">
+    <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
+    </div>
+
+  <!-- LISTA ZADAŃ -->
+  <div class="row">
+    <div *ngFor="let task of filteredTasks" class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100 shadow-sm border-start border-4" 
+           [ngClass]="{'border-success': task.status==='Wykonane', 'border-warning': task.status==='W trakcie', 'border-info': task.status==='Nowe'}">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">{{ task.title }}</h5>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id)">🗑️</button>
+          </div>
+          <p class="card-text text-muted small">{{ task.description }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="badge bg-secondary">{{ task.category }}</span>
+            <span class="badge" [ngClass]="{'bg-success': task.status==='Wykonane', 'bg-warning text-dark': task.status==='W trakcie', 'bg-info': task.status==='Nowe'}">
+              {{ task.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

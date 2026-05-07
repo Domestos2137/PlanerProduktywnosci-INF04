@@ -11,6 +11,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=planner.db"));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevPolicy", b =>
+    {
+        b.AllowAnyOrigin()
+         .AllowAnyMethod()
+         .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,6 +32,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors("DevPolicy");
 
 app.UseAuthorization();
 

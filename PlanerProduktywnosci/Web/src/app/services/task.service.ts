@@ -7,7 +7,7 @@ import { TodoTask } from '../models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:5000/api/tasks'; // Sprawdź port swojego API!
+  private apiUrl = 'http://localhost:5000/api/tasks'; 
 
   constructor(private http: HttpClient) { }
 
@@ -17,5 +17,13 @@ export class TaskService {
 
   addTask(task: TodoTask): Observable<TodoTask> {
     return this.http.post<TodoTask>(this.apiUrl, task);
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  updateTask(task: TodoTask): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${task.id}`, task);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { TaskService } from '../../services/task.service';
 import { TodoTask } from '../../models/task.model';
@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class TaskListComponent implements OnInit {
   tasks: TodoTask[] = [];
+  isLoading: boolean = true;
+  searchText: string = '';
 
   newTask: TodoTask = {
       title: '',
@@ -23,21 +25,16 @@ export class TaskListComponent implements OnInit {
       createdAt: new Date()
     };
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+      private taskService: TaskService, 
+      private cdr: ChangeDetectorRef 
+    ) {}
 
   ngOnInit(): void {
-    this.taskService.getTasks().subscribe({
-      next: (data) => {
-        this.tasks = data;
-        console.log('Pobrano zadania:', data);
-      },
-      error: (err) => {
-        console.error('Błąd pobierania zadań:', err);
-      }
-    });
+    this.loadTasks()
   }
 
-saveTask(): void {
+  saveTask(): void {
   if (this.newTask.title.trim()) {
     this.taskService.addTask(this.newTask).subscribe({
       next: (savedTask) => {
@@ -58,20 +55,34 @@ saveTask(): void {
     }
   }
 
-  private loadTasks(): void {
-    this.taskService.getTasks().subscribe(data => this.tasks = data);
-  }
+  loadTasks(): void {
+      this.isLoading = true;
+      this.taskService.getTasks().subscribe({
+        next: (data) => {
+          console.log('Dane w konsoli:', data);
+          this.tasks = data;
+          
+          this.cdr.detectChanges(); 
+          
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false;
+          this.cdr.detectChanges(); 
+        }
+      });
+    }
 
   private resetForm(): void {
     this.newTask = { title: '', description: '', status: 'Nowe', priority: 'Normalny', category: 'Praca', createdAt: new Date() };
   }
 
-  searchText: string = '';
+
 
   get filteredTasks() {
-    return this.tasks.filter(task => 
-      task.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      task.category.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
+      return this.tasks.filter(task => 
+        task.title.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
 }

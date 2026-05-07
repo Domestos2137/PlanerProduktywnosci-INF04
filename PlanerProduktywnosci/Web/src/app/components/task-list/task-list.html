@@ -29,10 +29,10 @@
     <div class="mb-3">
     <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
     </div>
-    
+
   <!-- LISTA ZADAŃ -->
   <div class="row">
-    <div *ngFor="let task of tasks" class="col-md-6 col-lg-4 mb-3">
+    <div *ngFor="let task of filteredTasks" class="col-md-6 col-lg-4 mb-3">
       <div class="card h-100 shadow-sm border-start border-4" 
            [ngClass]="{'border-success': task.status==='Wykonane', 'border-warning': task.status==='W trakcie', 'border-info': task.status==='Nowe'}">
         <div class="card-body">

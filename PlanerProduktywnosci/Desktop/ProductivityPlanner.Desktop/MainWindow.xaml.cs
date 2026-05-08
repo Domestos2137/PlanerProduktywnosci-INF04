@@ -53,11 +53,11 @@ namespace ProductivityPlanner.Desktop
                 return;
             }
 
-            // Tworzymy obiekt dokładnie tak, jak chce API
             var newTask = new TaskItem
             {
-                Id = 0, // Baza danych sama nada właściwe ID
+                Id = 0,
                 Title = txtNewTaskTitle.Text,
+                Description = txtDescription.Text, // <--- PRZYPISUJEMY WARTOŚĆ Z NOWEGO POLA
                 Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString(),
                 IsCompleted = false
             };
@@ -66,21 +66,18 @@ namespace ProductivityPlanner.Desktop
             {
                 var json = JsonConvert.SerializeObject(newTask);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                // Wysyłamy zapytanie
                 var response = await _client.PostAsync("http://localhost:5290/api/tasks", content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     txtNewTaskTitle.Clear();
-                    await LoadTasksFromApi(); // Odświeżamy listę
-                    MessageBox.Show("Zadanie dodane pomyślnie!");
+                    txtDescription.Clear(); // Czyścimy oba pola
+                    await LoadTasksFromApi();
                 }
                 else
                 {
-                    // Jeśli nie wyjdzie, pobieramy treść błędu z API
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"API zwróciło błąd: {response.StatusCode}\nSzczegóły: {errorContent}");
+                    MessageBox.Show($"Błąd API: {errorContent}");
                 }
             }
             catch (Exception ex)
@@ -93,6 +90,7 @@ namespace ProductivityPlanner.Desktop
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public string Category { get; set; }
         public bool IsCompleted { get; set; }
     }

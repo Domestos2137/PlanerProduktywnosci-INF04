@@ -15,8 +15,11 @@
         <TextBlock Text="Twoje Zadania" FontSize="22" FontWeight="Bold" Margin="0,0,0,15" Grid.Row="0"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,20">
-            <TextBox x:Name="txtNewTaskTitle" Width="300" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5"/>
-            <ComboBox x:Name="cmbCategory" Width="120" Margin="0,0,10,0" VerticalContentAlignment="Center">
+            <TextBox x:Name="txtNewTaskTitle" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" />
+
+            <TextBox x:Name="txtDescription" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" />
+
+            <ComboBox x:Name="cmbCategory" Width="100" Margin="0,0,10,0" VerticalContentAlignment="Center">
                 <ComboBoxItem Content="Praca" IsSelected="True"/>
                 <ComboBoxItem Content="Dom"/>
                 <ComboBoxItem Content="Inne"/>

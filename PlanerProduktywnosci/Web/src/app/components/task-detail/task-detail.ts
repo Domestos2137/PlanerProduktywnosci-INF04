@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-task-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './task-detail.component.html'
+  templateUrl: './task-detail.html'
 })
 export class TaskDetailComponent implements OnInit {
   task?: TodoTask;

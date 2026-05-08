@@ -9,7 +9,7 @@ import { TodoTask } from '../../models/task.model';
   selector: 'app-task-edit',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './task-edit.component.html'
+  templateUrl: './task-edit.html'
 })
 export class TaskEditComponent implements OnInit {
   // Inicjalizujemy pusty obiekt, żeby Angular nie rzucał błędami przed załadowaniem danych

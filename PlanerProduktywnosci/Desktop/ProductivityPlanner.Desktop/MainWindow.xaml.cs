@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Newtonsoft.Json;
+using Microsoft.Win32;
+using System.IO;
 
 namespace ProductivityPlanner.Desktop
 {
@@ -120,6 +122,28 @@ namespace ProductivityPlanner.Desktop
                 }
             }
         }
+
+        private void btnExportCSV_Click(object sender, RoutedEventArgs e)
+        {
+            var tasks = dgTasks.ItemsSource as List<TaskItem>;
+            if (tasks == null || tasks.Count == 0) return;
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Plik CSV (*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var csv = new StringBuilder();
+                csv.AppendLine("Id;Tytul;Opis;Status;Termin");
+
+                foreach (var t in tasks)
+                {
+                    csv.AppendLine($"{t.Id};{t.Title};{t.Description};{t.Status};{t.DueDate:yyyy-MM-dd}");
+                }
+
+                File.WriteAllText(saveFileDialog.FileName, csv.ToString(), Encoding.UTF8);
+                MessageBox.Show("Raport został wygenerowany!");
+            }
+        }
     }
     public class TaskItem
     {
@@ -128,5 +152,7 @@ namespace ProductivityPlanner.Desktop
         public string Description { get; set; }
         public string Category { get; set; }
         public bool IsCompleted { get; set; }
+        public string Status { get; set; } 
+        public DateTime DueDate { get; set; } 
     }
 }

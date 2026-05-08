@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Planer Produktywności" Height="500" Width="850" WindowStartupLocation="CenterScreen">
-    <Grid Margin="15">
+        Title="Planer Produktywności - Panel Zarządzania" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -13,32 +14,53 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Twoje Zadania" FontSize="22" FontWeight="Bold" Margin="0,0,0,15" Grid.Row="0"/>
+        <TextBlock Text="Twoje Centrum Zadań" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2C3E50"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,20">
-            <TextBox x:Name="txtNewTaskTitle" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" />
+        <Border Grid.Row="1" Background="#F8F9FA" CornerRadius="5" Padding="15" Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="Dodaj nowe zadanie:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="txtNewTaskTitle" Width="150" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" Tag="Tytuł"/>
+                    <TextBox x:Name="txtDescription" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" Tag="Opis"/>
 
-            <TextBox x:Name="txtDescription" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" />
+                    <DatePicker x:Name="dpDueDate" Width="120" Margin="0,0,10,0" VerticalContentAlignment="Center"/>
 
-            <ComboBox x:Name="cmbCategory" Width="100" Margin="0,0,10,0" VerticalContentAlignment="Center">
-                <ComboBoxItem Content="Praca" IsSelected="True"/>
-                <ComboBoxItem Content="Dom"/>
-                <ComboBoxItem Content="Inne"/>
-            </ComboBox>
-            <Button Content="Dodaj zadanie" Click="btnAdd_Click" Padding="15,5" Background="#28A745" Foreground="White" FontWeight="Bold"/>
-        </StackPanel>
+                    <ComboBox x:Name="cmbStatus" Width="100" Margin="0,0,10,0" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="Nowe" IsSelected="True"/>
+                        <ComboBoxItem Content="W toku"/>
+                        <ComboBoxItem Content="Gotowe"/>
+                    </ComboBox>
 
-        <DataGrid x:Name="dgTasks" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
+                    <ComboBox x:Name="cmbCategory" Width="100" Margin="0,0,10,0" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="Praca" IsSelected="True"/>
+                        <ComboBoxItem Content="Dom"/>
+                        <ComboBoxItem Content="Inne"/>
+                    </ComboBox>
+
+                    <Button Content="Dodaj +" Click="btnAdd_Click" Padding="15,5" Background="#28A745" Foreground="White" FontWeight="Bold" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="dgTasks" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" 
+                  SelectionMode="Single" Background="White" BorderBrush="#DEE2E6" AlternatingRowBackground="#F2F2F2"
+                  FontSize="13" RowHeight="30">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tytuł" Binding="{Binding Title}" Width="150"/>
                 <DataGridTextColumn Header="Opis" Binding="{Binding Description}" Width="*"/>
                 <DataGridTextColumn Header="Kategoria" Binding="{Binding Category}" Width="100"/>
-                <DataGridCheckBoxColumn Header="Gotowe" Binding="{Binding IsCompleted}" Width="60"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Termin" Binding="{Binding DueDate, StringFormat=yyyy-MM-dd}" Width="100"/>
+                <DataGridCheckBoxColumn Header="Gotowe" Binding="{Binding IsCompleted}" Width="70"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="3" Content="Usuń wybrane zadanie" Click="btnDelete_Click" 
-            HorizontalAlignment="Right" Margin="0,10,0,0" Padding="15,5" 
-            Background="#DC3545" Foreground="White" FontWeight="Bold"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button Content="📊 Generuj Raport CSV" Click="btnExportCSV_Click" 
+                    Margin="0,0,10,0" Padding="15,8" Background="#17A2B8" Foreground="White" FontWeight="SemiBold"/>
+
+            <Button Content="🗑 Usuń zaznaczone" Click="btnDelete_Click" 
+                    Padding="15,8" Background="#DC3545" Foreground="White" FontWeight="SemiBold"/>
+        </StackPanel>
     </Grid>
 </Window>

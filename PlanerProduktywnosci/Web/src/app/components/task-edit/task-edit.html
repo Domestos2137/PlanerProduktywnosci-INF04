@@ -1,1 +1,77 @@
-<p>task-edit works!</p>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+          <h3 class="mb-0">Edytuj zadanie</h3>
+        </div>
+        <div class="card-body">
+          <form #editForm="ngForm" (ngSubmit)="saveTask()">
+            
+            <div class="mb-3">
+              <label class="form-label">Tytuł zadania *</label>
+              <input type="text" class="form-control" name="title" 
+                     [(ngModel)]="task.title" required #title="ngModel"
+                     [class.is-invalid]="title.invalid && title.touched">
+              <div class="invalid-feedback">Tytuł jest wymagany.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Opis</label>
+              <textarea class="form-control" name="description" rows="3" 
+                        [(ngModel)]="task.description"></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Termin</label>
+                <input type="date" class="form-control" name="dueDate" 
+                       [ngModel]="task.dueDate | date:'yyyy-MM-dd'" 
+                       (ngModelChange)="task.dueDate = $event">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Kategoria</label>
+                <select class="form-select" name="category" [(ngModel)]="task.category">
+                  <option value="Praca">Praca</option>
+                  <option value="Dom">Dom</option>
+                  <option value="Inne">Inne</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" name="status" [(ngModel)]="task.status">
+                  <option value="Nowe">Nowe</option>
+                  <option value="W toku">W toku</option>
+                  <option value="Gotowe">Gotowe</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Priorytet</label>
+                <select class="form-select" name="priority" [(ngModel)]="task.priority">
+                  <option value="Niski">Niski</option>
+                  <option value="Normalny">Normalny</option>
+                  <option value="Wysoki">Wysoki</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+              <button type="submit" class="btn btn-success w-100" [disabled]="editForm.invalid">
+                Zapisz zmiany
+              </button>
+              <button type="button" class="btn btn-outline-secondary w-100" [routerLink]="['/']">
+                Anuluj
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

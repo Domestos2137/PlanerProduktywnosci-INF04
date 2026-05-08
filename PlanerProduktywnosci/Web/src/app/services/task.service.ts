@@ -15,6 +15,10 @@ export class TaskService {
     return this.http.get<TodoTask[]>(this.apiUrl);
   }
 
+  getTaskById(id: number): Observable<TodoTask> {
+    return this.http.get<TodoTask>(`${this.apiUrl}/${id}`);
+  }
+
   addTask(task: TodoTask): Observable<TodoTask> {
     return this.http.post<TodoTask>(this.apiUrl, task);
   }

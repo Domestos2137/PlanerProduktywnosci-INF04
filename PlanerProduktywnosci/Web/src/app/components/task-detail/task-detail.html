@@ -1,1 +1,26 @@
-<p>task-detail works!</p>
+<div class="container mt-5" *ngIf="task">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between">
+      <h3 class="mb-0">{{ task.title }}</h3>
+      <span class="badge bg-light text-dark">{{ task.status }}</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <h5>Opis:</h5>
+          <p class="lead">{{ task.description || 'Brak opisu' }}</p>
+        </div>
+        <div class="col-md-4 border-start">
+          <p><strong>Kategoria:</strong> {{ task.category }}</p>
+          <p><strong>Priorytet:</strong> {{ task.priority }}</p>
+          <p><strong>Termin:</strong> {{ task.dueDate | date:'dd.MM.yyyy' }}</p>
+          <p><strong>Utworzono:</strong> {{ task.createdAt | date:'short' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex gap-2">
+      <button class="btn btn-secondary" (click)="goBack()">Powrót</button>
+      <button class="btn btn-warning" [routerLink]="['/tasks/edit', task.id]">Edytuj</button>
+    </div>
+  </div>
+</div>

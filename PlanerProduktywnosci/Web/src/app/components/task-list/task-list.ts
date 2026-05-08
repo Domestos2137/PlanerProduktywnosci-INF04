@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { TodoTask } from '../../models/task.model';
 import { FormsModule } from '@angular/forms';
+// 1. DODAJEMY TEN IMPORT:
+import { RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-task-list',
   standalone: true, 
-  imports: [CommonModule, FormsModule], 
+  // 2. DODAJEMY RouterLink DO TABLICY IMPORTS:
+  imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss'
 })
@@ -77,8 +80,6 @@ export class TaskListComponent implements OnInit {
   private resetForm(): void {
     this.newTask = { title: '', description: '', status: 'Nowe', priority: 'Normalny', category: 'Praca', createdAt: new Date() };
   }
-
-
 
   get filteredTasks() {
       return this.tasks.filter(task => 

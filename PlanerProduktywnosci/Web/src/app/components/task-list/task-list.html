@@ -1,7 +1,6 @@
 <div class="container mt-4">
   <h2 class="text-primary mb-4">📋 Planer Produktywności</h2>
 
-  <!-- FORMULARZ DODAWANIA -->
   <div class="card mb-4 shadow-sm">
     <div class="card-header bg-light"><strong>Dodaj nowe zadanie</strong></div>
     <div class="card-body">
@@ -26,28 +25,39 @@
     </div>
   </div>
 
-    <div class="mb-3">
+  <div class="mb-3">
     <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
-    </div>
+  </div>
 
-  <!-- LISTA ZADAŃ -->
   <div class="row">
     <div *ngFor="let task of filteredTasks" class="col-md-6 col-lg-4 mb-3">
       <div class="card h-100 shadow-sm border-start border-4" 
-           [ngClass]="{'border-success': task.status==='Wykonane', 'border-warning': task.status==='W trakcie', 'border-info': task.status==='Nowe'}">
+           [ngClass]="{'border-success': task.status==='Gotowe', 'border-warning': task.status==='W toku', 'border-info': task.status==='Nowe'}">
+        
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <h5 class="card-title">{{ task.title }}</h5>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id)">🗑️</button>
+            <h5 class="card-title text-truncate" style="max-width: 80%;">{{ task.title }}</h5>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id!)" title="Usuń">🗑️</button>
           </div>
-          <p class="card-text text-muted small">{{ task.description }}</p>
+          <p class="card-text text-muted small text-truncate">{{ task.description }}</p>
+          
           <div class="d-flex justify-content-between align-items-center mt-3">
             <span class="badge bg-secondary">{{ task.category }}</span>
-            <span class="badge" [ngClass]="{'bg-success': task.status==='Wykonane', 'bg-warning text-dark': task.status==='W trakcie', 'bg-info': task.status==='Nowe'}">
+            <span class="badge" [ngClass]="{'bg-success': task.status==='Gotowe', 'bg-warning text-dark': task.status==='W toku', 'bg-info': task.status==='Nowe'}">
               {{ task.status }}
             </span>
           </div>
         </div>
+
+        <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
+          <button class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/tasks', task.id]">
+            👁️ Szczegóły
+          </button>
+          <button class="btn btn-outline-warning btn-sm flex-grow-1" [routerLink]="['components/task-edit/task-edit', task.id]">
+            ✏️ Edytuj
+          </button>
+        </div>
+
       </div>
     </div>
   </div>

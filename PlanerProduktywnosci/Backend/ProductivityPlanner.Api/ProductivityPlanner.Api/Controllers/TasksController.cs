@@ -43,11 +43,15 @@ namespace ProductivityPlanner.Api.Controllers
 
         // PUT: api/Tasks/5 - Edytuje istniejące zadanie
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTask(int id, TodoTask task)
+        public async Task<IActionResult> UpdateTask(int id, TodoTask updatedTask)
         {
-            if (id != task.Id) return BadRequest();
+            if (id != updatedTask.Id)
+            {
+                return BadRequest("ID w URL nie zgadza się z ID zadania.");
+            }
 
-            _context.Entry(task).State = EntityState.Modified;
+            // Informujemy bazę, że ten obiekt został zmodyfikowany
+            _context.Entry(updatedTask).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +63,7 @@ namespace ProductivityPlanner.Api.Controllers
                 else throw;
             }
 
-            return NoContent();
+            return NoContent(); // Sukces (204)
         }
 
         // DELETE: api/Tasks/5 - Usuwa zadanie

@@ -186,17 +186,35 @@ namespace ProductivityPlanner.Desktop
                 selected.Title = txtNewTaskTitle.Text;
                 selected.Description = txtDescription.Text;
                 selected.DueDate = dpDueDate.SelectedDate;
+                selected.Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString();
+                selected.Status = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-                var json = JsonConvert.SerializeObject(selected);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await _client.PutAsync($"http://localhost:5290/api/tasks/{selected.Id}", content);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    MessageBox.Show("Zadanie zaktualizowane!");
-                    await LoadTasksFromApi();
+                    var json = JsonConvert.SerializeObject(selected);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await _client.PutAsync($"http://localhost:5290/api/tasks/{selected.Id}", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Zapisano zmiany!", "Sukces");
+                        await LoadTasksFromApi();
+                    }
+                    else
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Błąd zapisu: {error}");
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd połączenia: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Najpierw wybierz zadanie z listy, które chcesz edytować!");
             }
         }
     }

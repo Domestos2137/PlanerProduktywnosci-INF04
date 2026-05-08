@@ -16,8 +16,13 @@
 
         <TextBlock Text="Twoje Centrum Zadań" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" Foreground="#2C3E50"/>
 
+        
         <Border Grid.Row="1" Background="#F8F9FA" CornerRadius="5" Padding="15" Margin="0,0,0,20">
+            
             <StackPanel>
+                <TextBlock Text="Szukaj:" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold"/>
+                <TextBox x:Name="txtSearch" Width="200" Padding="3" TextChanged="txtSearch_TextChanged"/>
+
                 <TextBlock Text="Dodaj nowe zadanie:" FontWeight="SemiBold" Margin="0,0,0,10"/>
                 <StackPanel Orientation="Horizontal">
                     <TextBox x:Name="txtNewTaskTitle" Width="150" Margin="0,0,10,0" VerticalContentAlignment="Center" Padding="5" Tag="Tytuł"/>
@@ -38,6 +43,7 @@
                     </ComboBox>
 
                     <Button Content="Dodaj +" Click="btnAdd_Click" Padding="15,5" Background="#28A745" Foreground="White" FontWeight="Bold" Cursor="Hand"/>
+                    <Button Content="Zapisz zmiany" Click="btnUpdate_Click" Background="#FFC107" Margin="5,0,0,0" Padding="10,5"/>
                 </StackPanel>
             </StackPanel>
         </Border>

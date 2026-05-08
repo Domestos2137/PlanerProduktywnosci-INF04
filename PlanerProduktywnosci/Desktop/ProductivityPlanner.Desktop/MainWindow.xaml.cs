@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Newtonsoft.Json;
-using Microsoft.Win32;
-using System.IO;
+using System.Windows.Data;
 
 namespace ProductivityPlanner.Desktop
 {
@@ -126,22 +128,75 @@ namespace ProductivityPlanner.Desktop
         private void btnExportCSV_Click(object sender, RoutedEventArgs e)
         {
             var tasks = dgTasks.ItemsSource as List<TaskItem>;
-            if (tasks == null || tasks.Count == 0) return;
+            if (tasks == null || tasks.Count == 0)
+            {
+                MessageBox.Show("Brak danych do eksportu!");
+                return;
+            }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Plik CSV (*.csv)|*.csv";
-            if (saveFileDialog.ShowDialog() == true)
+            SaveFileDialog saveDialog = new SaveFileDialog
+            {
+                Filter = "Plik CSV (*.csv)|*.csv",
+                FileName = $"Raport_Zadan_{DateTime.Now:yyyyMMdd}.csv"
+            };
+
+            if (saveDialog.ShowDialog() == true)
             {
                 var csv = new StringBuilder();
-                csv.AppendLine("Id;Tytul;Opis;Status;Termin");
+                csv.AppendLine("Tytul;Opis;Kategoria;Status;Termin;Gotowe");
 
                 foreach (var t in tasks)
                 {
-                    csv.AppendLine($"{t.Id};{t.Title};{t.Description};{t.Status};{t.DueDate:yyyy-MM-dd}");
+                    csv.AppendLine($"{t.Title};{t.Description};{t.Category};{t.Status};{t.DueDate?.ToShortDateString()};{t.IsCompleted}");
                 }
 
-                File.WriteAllText(saveFileDialog.FileName, csv.ToString(), Encoding.UTF8);
-                MessageBox.Show("Raport został wygenerowany!");
+                File.WriteAllText(saveDialog.FileName, csv.ToString(), Encoding.UTF8);
+                MessageBox.Show("Raport został wygenerowany pomyślnie!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtSearch.Text.ToLower();
+            ICollectionView view = CollectionViewSource.GetDefaultView(dgTasks.ItemsSource);
+
+            if (view != null)
+            {
+                view.Filter = item => {
+                    var task = item as TaskItem;
+                    return task != null && task.Title.ToLower().Contains(filter);
+                };
+            }
+        }
+
+        private void DgTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgTasks.SelectedItem is TaskItem selected)
+            {
+                txtNewTaskTitle.Text = selected.Title;
+                txtDescription.Text = selected.Description;
+                dpDueDate.SelectedDate = selected.DueDate;
+            }
+        }
+
+        private async void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgTasks.SelectedItem is TaskItem selected)
+            {
+                selected.Title = txtNewTaskTitle.Text;
+                selected.Description = txtDescription.Text;
+                selected.DueDate = dpDueDate.SelectedDate;
+
+                var json = JsonConvert.SerializeObject(selected);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _client.PutAsync($"http://localhost:5290/api/tasks/{selected.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Zadanie zaktualizowane!");
+                    await LoadTasksFromApi();
+                }
             }
         }
     }
@@ -153,6 +208,6 @@ namespace ProductivityPlanner.Desktop
         public string Category { get; set; }
         public bool IsCompleted { get; set; }
         public string Status { get; set; }
-        public DateTime? DueDate { get; set; }
+        public DateTime? DueDate { get; set; } = DateTime.MinValue;
     }
 }

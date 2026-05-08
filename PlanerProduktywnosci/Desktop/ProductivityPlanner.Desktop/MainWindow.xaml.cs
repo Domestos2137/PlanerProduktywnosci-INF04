@@ -1,53 +1,47 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Windows;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http.Headers; 
+using System.Windows.Controls;
 
-namespace ProductivityPlanner.Desktop
+private async void btnAdd_Click(object sender, RoutedEventArgs e)
 {
-    public partial class MainWindow : Window
+    if (string.IsNullOrWhiteSpace(txtNewTaskTitle.Text))
     {
-        private readonly string _token;
-        private readonly HttpClient _client = new HttpClient();
-
-        public MainWindow(string token)
-        {
-            InitializeComponent();
-            _token = token; 
-
-            Loaded += MainWindow_Loaded;
-        }
-
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            await LoadTasksFromApi();
-        }
-
-        private async Task LoadTasksFromApi()
-        {
-            try
-            {
-                _client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", _token);
-
-                var response = await _client.GetStringAsync("http://localhost:5290/api/tasks");
-
-                var tasks = JsonConvert.DeserializeObject<List<TaskItem>>(response);
-
-                dgTasks.ItemsSource = tasks;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Nie udało się pobrać zadań: " + ex.Message);
-            }
-        }
+        MessageBox.Show("Wpisz tytuł zadania!");
+        return;
     }
 
-    public class TaskItem
+    var newTask = new
     {
-        public string Title { get; set; }
-        public string Category { get; set; }
-        public bool IsCompleted { get; set; }
+        Title = txtNewTaskTitle.Text,
+        Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString(),
+        IsCompleted = false
+    };
+
+    var json = JsonConvert.SerializeObject(newTask);
+    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+    try
+    {
+        // Upewnij się, że token jest w nagłówku (jeśli go tam jeszcze nie ma)
+        _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _client.PostAsync("http://localhost:5290/api/tasks", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            txtNewTaskTitle.Clear(); // Czyścimy pole
+            await LoadTasksFromApi(); // Odświeżamy listę, żeby zobaczyć nowe zadanie
+        }
+        else
+        {
+            MessageBox.Show("Błąd podczas dodawania: " + response.ReasonPhrase);
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Błąd połączenia: " + ex.Message);
     }
 }

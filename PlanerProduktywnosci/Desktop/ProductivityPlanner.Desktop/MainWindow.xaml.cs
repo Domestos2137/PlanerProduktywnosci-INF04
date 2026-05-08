@@ -1,24 +1,53 @@
-﻿using System.Text;
+﻿using System.Net.Http;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http.Headers; 
 
 namespace ProductivityPlanner.Desktop
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly string _token;
+        private readonly HttpClient _client = new HttpClient();
+
+        public MainWindow(string token)
         {
             InitializeComponent();
+            _token = token; 
+
+            Loaded += MainWindow_Loaded;
         }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadTasksFromApi();
+        }
+
+        private async Task LoadTasksFromApi()
+        {
+            try
+            {
+                _client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", _token);
+
+                var response = await _client.GetStringAsync("http://localhost:5290/api/tasks");
+
+                var tasks = JsonConvert.DeserializeObject<List<TaskItem>>(response);
+
+                dgTasks.ItemsSource = tasks;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie udało się pobrać zadań: " + ex.Message);
+            }
+        }
+    }
+
+    public class TaskItem
+    {
+        public string Title { get; set; }
+        public string Category { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

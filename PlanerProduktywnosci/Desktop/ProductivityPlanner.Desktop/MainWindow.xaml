@@ -10,6 +10,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Twoje Zadania" FontSize="22" FontWeight="Bold" Margin="0,0,0,15" Grid.Row="0"/>
@@ -27,12 +28,17 @@
             <Button Content="Dodaj zadanie" Click="btnAdd_Click" Padding="15,5" Background="#28A745" Foreground="White" FontWeight="Bold"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgTasks" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="Horizontal" Background="White">
+        <DataGrid x:Name="dgTasks" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tytuł" Binding="{Binding Title}" Width="*"/>
-                <DataGridTextColumn Header="Kategoria" Binding="{Binding Category}" Width="150"/>
-                <DataGridCheckBoxColumn Header="Gotowe" Binding="{Binding IsCompleted}" Width="80"/>
+                <DataGridTextColumn Header="Tytuł" Binding="{Binding Title}" Width="150"/>
+                <DataGridTextColumn Header="Opis" Binding="{Binding Description}" Width="*"/>
+                <DataGridTextColumn Header="Kategoria" Binding="{Binding Category}" Width="100"/>
+                <DataGridCheckBoxColumn Header="Gotowe" Binding="{Binding IsCompleted}" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Grid.Row="3" Content="Usuń wybrane zadanie" Click="btnDelete_Click" 
+            HorizontalAlignment="Right" Margin="0,10,0,0" Padding="15,5" 
+            Background="#DC3545" Foreground="White" FontWeight="Bold"/>
     </Grid>
 </Window>

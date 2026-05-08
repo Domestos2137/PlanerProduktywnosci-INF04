@@ -53,8 +53,10 @@ namespace ProductivityPlanner.Desktop
                 return;
             }
 
-            var newTask = new
+            // Tworzymy obiekt dokładnie tak, jak chce API
+            var newTask = new TaskItem
             {
+                Id = 0, // Baza danych sama nada właściwe ID
                 Title = txtNewTaskTitle.Text,
                 Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString(),
                 IsCompleted = false
@@ -64,23 +66,32 @@ namespace ProductivityPlanner.Desktop
             {
                 var json = JsonConvert.SerializeObject(newTask);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Wysyłamy zapytanie
                 var response = await _client.PostAsync("http://localhost:5290/api/tasks", content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     txtNewTaskTitle.Clear();
-                    await LoadTasksFromApi(); // Odśwież listę
+                    await LoadTasksFromApi(); // Odświeżamy listę
+                    MessageBox.Show("Zadanie dodane pomyślnie!");
+                }
+                else
+                {
+                    // Jeśli nie wyjdzie, pobieramy treść błędu z API
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"API zwróciło błąd: {response.StatusCode}\nSzczegóły: {errorContent}");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Błąd dodawania: " + ex.Message);
+                MessageBox.Show("Błąd połączenia: " + ex.Message);
             }
         }
     }
-
     public class TaskItem
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Category { get; set; }
         public bool IsCompleted { get; set; }

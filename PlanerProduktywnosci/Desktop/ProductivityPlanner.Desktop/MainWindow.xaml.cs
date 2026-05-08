@@ -20,7 +20,6 @@ namespace ProductivityPlanner.Desktop
             InitializeComponent();
             _token = token;
 
-            // Autoryzacja dla wszystkich przyszłych zapytań tego klienta
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
 
             Loaded += MainWindow_Loaded;
@@ -57,7 +56,7 @@ namespace ProductivityPlanner.Desktop
             {
                 Id = 0,
                 Title = txtNewTaskTitle.Text,
-                Description = txtDescription.Text, // <--- PRZYPISUJEMY WARTOŚĆ Z NOWEGO POLA
+                Description = txtDescription.Text, 
                 Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString(),
                 IsCompleted = false
             };
@@ -71,7 +70,7 @@ namespace ProductivityPlanner.Desktop
                 if (response.IsSuccessStatusCode)
                 {
                     txtNewTaskTitle.Clear();
-                    txtDescription.Clear(); // Czyścimy oba pola
+                    txtDescription.Clear(); 
                     await LoadTasksFromApi();
                 }
                 else
@@ -83,6 +82,42 @@ namespace ProductivityPlanner.Desktop
             catch (Exception ex)
             {
                 MessageBox.Show("Błąd połączenia: " + ex.Message);
+            }
+        }
+
+        private async void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedTask = dgTasks.SelectedItem as TaskItem;
+
+            if (selectedTask == null)
+            {
+                MessageBox.Show("Najpierw zaznacz zadanie w tabeli!");
+                return;
+            }
+
+            var result = MessageBox.Show($"Czy na pewno chcesz usunąć zadanie: {selectedTask.Title}?",
+                                         "Potwierdzenie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var response = await _client.DeleteAsync($"http://localhost:5290/api/tasks/{selectedTask.Id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await LoadTasksFromApi(); // Odświeżamy listę
+                        MessageBox.Show("Zadanie usunięte.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Błąd API podczas usuwania.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Błąd połączenia: " + ex.Message);
+                }
             }
         }
     }

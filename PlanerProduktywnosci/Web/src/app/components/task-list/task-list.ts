@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task.service';
 import { TodoTask } from '../../models/task.model';
 import { FormsModule } from '@angular/forms';
-// 1. DODAJEMY TEN IMPORT:
 import { RouterLink } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -30,7 +30,8 @@ export class TaskListComponent implements OnInit {
 
   constructor(
       private taskService: TaskService, 
-      private cdr: ChangeDetectorRef 
+      private cdr: ChangeDetectorRef,
+      private router: Router
     ) {}
 
   ngOnInit(): void {
@@ -86,4 +87,20 @@ export class TaskListComponent implements OnInit {
         task.title.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }
+
+  goToDetails(id: number | undefined): void {
+    if (id) {
+      this.router.navigate(['/tasks', id]);
+    } else {
+      alert('Błąd: Zadanie nie ma ID!');
+    }
+  }
+
+  goToEdit(id: number | undefined): void {
+    if (id) {
+      this.router.navigate(['/tasks/edit', id]);
+    } else {
+      alert('Błąd: Zadanie nie ma ID!');
+    }
+  }
 }

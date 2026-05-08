@@ -49,14 +49,14 @@
           </div>
         </div>
 
-        <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
-          <button class="btn btn-outline-primary btn-sm flex-grow-1" [routerLink]="['/tasks', task.id]">
-            👁️ Szczegóły
-          </button>
-          <button class="btn btn-outline-warning btn-sm flex-grow-1" [routerLink]="['components/task-edit/task-edit', task.id]">
-            ✏️ Edytuj
-          </button>
-        </div>
+      <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
+        <button class="btn btn-outline-primary btn-sm flex-grow-1" (click)="goToDetails(task.id)">
+          👁️ Szczegóły
+        </button>
+        <button class="btn btn-outline-warning btn-sm flex-grow-1" (click)="goToEdit(task.id)">
+          ✏️ Edytuj
+        </button>
+      </div>
 
       </div>
     </div>

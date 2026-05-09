@@ -47,4 +47,34 @@ public class ApiService
             return new List<TodoTask>();
         }
     }
+
+    public async Task<bool> AddTaskAsync(TodoTask task)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/tasks", task);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> UpdateTaskAsync(TodoTask task)
+    {
+        try
+        {
+            var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/tasks/{task.Id}", task);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> DeleteTaskAsync(int id)
+    {
+        try
+        {
+            var response = await _httpClient.DeleteAsync($"{_baseUrl}/tasks/{id}");
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
 }

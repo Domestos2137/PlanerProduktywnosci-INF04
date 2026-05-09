@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProductivityPlanner.Api.Models
+namespace PlanerMobilny.Models
 {
     public class TodoTask
     {

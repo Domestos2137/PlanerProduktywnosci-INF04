@@ -15,6 +15,10 @@ export class TaskService {
     return this.http.get<TodoTask[]>(this.apiUrl);
   }
 
+  getTaskById(id: number): Observable<TodoTask> {
+    return this.http.get<TodoTask>(`${this.apiUrl}/${id}`);
+  }
+
   addTask(task: TodoTask): Observable<TodoTask> {
     return this.http.post<TodoTask>(this.apiUrl, task);
   }
@@ -23,7 +27,7 @@ export class TaskService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  updateTask(task: TodoTask): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${task.id}`, task);
+  updateTask(id: number, task: TodoTask): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, task);
   }
 }

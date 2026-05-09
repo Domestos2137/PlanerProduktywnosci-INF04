@@ -1,53 +1,133 @@
 <div class="container mt-4">
   <h2 class="text-primary mb-4">📋 Planer Produktywności</h2>
 
-  <!-- FORMULARZ DODAWANIA -->
-  <div class="card mb-4 shadow-sm">
-    <div class="card-header bg-light"><strong>Dodaj nowe zadanie</strong></div>
-    <div class="card-body">
-      <div class="row g-2">
+  <div class="card mb-4 shadow-sm border-0">
+    <div class="card-header bg-dark text-white">
+      <strong>✨ Dodaj nowe zadanie</strong>
+    </div>
+    <div class="card-body bg-light">
+      <div class="row g-3">
+        <!-- Rząd 1: Główne informacje -->
         <div class="col-md-4">
-          <input type="text" class="form-control" placeholder="Tytuł zadania" [(ngModel)]="newTask.title">
+          <label class="small fw-bold">Tytuł</label>
+          <input type="text" class="form-control" placeholder="Co jest do zrobienia?" [(ngModel)]="newTask.title">
         </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control" placeholder="Opis" [(ngModel)]="newTask.description">
+        <div class="col-md-5">
+          <label class="small fw-bold">Opis</label>
+          <input type="text" class="form-control" placeholder="Krótki opis (opcjonalnie)" [(ngModel)]="newTask.description">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <label class="small fw-bold">Termin</label>
+          <input type="date" class="form-control" [(ngModel)]="newTask.dueDate">
+        </div>
+
+        <!-- Rząd 2: Parametry -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Kategoria</label>
           <select class="form-select" [(ngModel)]="newTask.category">
             <option value="Praca">Praca</option>
             <option value="Dom">Dom</option>
             <option value="Inne">Inne</option>
           </select>
         </div>
-        <div class="col-md-2">
-          <button class="btn btn-success w-100" (click)="saveTask()">Zapisz</button>
+        <div class="col-md-3">
+          <label class="small fw-bold">Priorytet</label>
+          <select class="form-select" [(ngModel)]="newTask.priority">
+            <option value="Niski">Niski</option>
+            <option value="Normalny">Normalny</option>
+            <option value="Wysoki">Wysoki</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="small fw-bold">Status</label>
+          <select class="form-select" [(ngModel)]="newTask.status">
+            <option value="Nowe">Nowe</option>
+            <option value="W toku">W toku</option>
+            <option value="Gotowe">Gotowe</option>
+          </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-success w-100 fw-bold" (click)="saveTask()">
+            ➕ Dodaj zadanie
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-    <div class="mb-3">
-    <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
+  <div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+      <span>🔍 Filtrowanie i wyszukiwanie</span>
+      <button class="btn btn-sm btn-light" (click)="clearFilters()">Wyczyść wszystko</button>
     </div>
+    <div class="card-body bg-light">
+      <div class="row g-2">
+        <!-- Szukajka -->
+        <div class="col-md-4">
+          <label class="small fw-bold">Szukaj po nazwie/opisie</label>
+          <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Wpisz frazę...">
+        </div>
 
-  <!-- LISTA ZADAŃ -->
+        <!-- Status -->
+        <div class="col-md-2">
+          <label class="small fw-bold">Status</label>
+          <select class="form-select" [(ngModel)]="filterStatus">
+            <option value="">Wszystkie</option>
+            <option value="Nowe">Nowe</option>
+            <option value="W toku">W toku</option>
+            <option value="Gotowe">Gotowe</option>
+          </select>
+        </div>
+
+        <!-- Kategoria -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Kategoria</label>
+          <select class="form-select" [(ngModel)]="filterCategory">
+            <option value="">Wszystkie</option>
+            <option value="Praca">Praca</option>
+            <option value="Dom">Dom</option>
+            <option value="Inne">Inne</option>
+          </select>
+        </div>
+
+        <!-- Data -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Termin (konkretny dzień)</label>
+          <input type="date" class="form-control" [(ngModel)]="filterDate">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div *ngFor="let task of filteredTasks" class="col-md-6 col-lg-4 mb-3">
       <div class="card h-100 shadow-sm border-start border-4" 
-           [ngClass]="{'border-success': task.status==='Wykonane', 'border-warning': task.status==='W trakcie', 'border-info': task.status==='Nowe'}">
+           [ngClass]="{'border-success': task.status==='Gotowe', 'border-warning': task.status==='W toku', 'border-info': task.status==='Nowe'}">
+        
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <h5 class="card-title">{{ task.title }}</h5>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id)">🗑️</button>
+            <h5 class="card-title text-truncate" style="max-width: 80%;">{{ task.title }}</h5>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id!)" title="Usuń">🗑️</button>
           </div>
-          <p class="card-text text-muted small">{{ task.description }}</p>
+          <p class="card-text text-muted small text-truncate">{{ task.description }}</p>
+          
           <div class="d-flex justify-content-between align-items-center mt-3">
             <span class="badge bg-secondary">{{ task.category }}</span>
-            <span class="badge" [ngClass]="{'bg-success': task.status==='Wykonane', 'bg-warning text-dark': task.status==='W trakcie', 'bg-info': task.status==='Nowe'}">
+            <span class="badge" [ngClass]="{'bg-success': task.status==='Gotowe', 'bg-warning text-dark': task.status==='W toku', 'bg-info': task.status==='Nowe'}">
               {{ task.status }}
             </span>
           </div>
         </div>
+
+      <div class="card-footer bg-transparent border-top-0 d-flex gap-2">
+        <button class="btn btn-outline-primary btn-sm flex-grow-1" (click)="goToDetails(task.id)">
+          👁️ Szczegóły
+        </button>
+        <button class="btn btn-outline-warning btn-sm flex-grow-1" (click)="goToEdit(task.id)">
+          ✏️ Edytuj
+        </button>
+      </div>
+
       </div>
     </div>
   </div>

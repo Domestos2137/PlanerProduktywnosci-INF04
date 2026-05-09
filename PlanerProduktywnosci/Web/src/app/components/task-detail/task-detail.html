@@ -1,1 +1,37 @@
-<p>task-detail works!</p>
+<div class="container mt-5">
+  
+  <div *ngIf="isLoading" class="alert alert-info text-center">
+    Ładowanie szczegółów zadania... ⏳
+  </div>
+
+  <div *ngIf="!isLoading && !task" class="alert alert-danger text-center">
+    Nie udało się załadować zadania! Sprawdź konsolę (F12). ❌
+    <br><br>
+    <button class="btn btn-secondary" (click)="goBack()">Powrót do listy</button>
+  </div>
+
+  <div class="card shadow" *ngIf="!isLoading && task">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">{{ task.title }}</h3>
+      <span class="badge bg-light text-dark">{{ task.status }}</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <h5>Opis:</h5>
+          <p class="lead">{{ task.description || 'Brak opisu.' }}</p>
+        </div>
+        <div class="col-md-4 border-start">
+          <p><strong>Kategoria:</strong> {{ task.category }}</p>
+          <p><strong>Priorytet:</strong> {{ task.priority }}</p>
+          <p><strong>Termin:</strong> {{ (task.dueDate | date:'dd.MM.yyyy') || 'Brak terminu' }}</p>
+          <p><strong>Utworzono:</strong> {{ task.createdAt | date:'short' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent d-flex gap-2">
+      <button class="btn btn-outline-secondary flex-grow-1" (click)="goBack()">⬅️ Powrót</button>
+      <button class="btn btn-outline-warning flex-grow-1" [routerLink]="['/tasks/edit', task.id]">✏️ Edytuj</button>
+    </div>
+  </div>
+</div>

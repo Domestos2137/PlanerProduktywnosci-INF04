@@ -31,4 +31,23 @@ public partial class TodayPage : ContentPage
         await LoadTasks();
         RefreshTasks.IsRefreshing = false;
     }
+
+    private async void OnTaskStatusChanged(object sender, CheckedChangedEventArgs e)
+    {
+        var checkbox = (CheckBox)sender;
+        var task = (TodoTask)checkbox.BindingContext;
+
+        if (task != null)
+        {
+            bool success = await _apiService.UpdateTaskAsync(task);
+
+            if (!success)
+            {
+                await DisplayAlert("B³¹d", "Nie uda³o siê zaktualizowaæ zadania", "OK");
+            }
+
+            var tasks = (List<TodoTask>)TasksListView.ItemsSource;
+            CountLabel.Text = tasks.Count(t => !t.IsDone).ToString();
+        }
+    }
 }

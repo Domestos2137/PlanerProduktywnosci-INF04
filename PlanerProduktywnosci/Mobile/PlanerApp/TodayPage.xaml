@@ -18,7 +18,9 @@
                     <DataTemplate>
                         <Frame Margin="0,5" Padding="15" HasShadow="False" CornerRadius="10" BorderColor="#E0E0E0">
                             <HorizontalStackLayout Spacing="15">
-                                <CheckBox IsChecked="{Binding IsDone}" Color="#3498DB" />
+                                <CheckBox IsChecked="{Binding IsDone}" 
+                                  Color="#3498DB" 
+                                  CheckedChanged="OnTaskStatusChanged" />
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="#2C3E50"/>
                                     <Label Text="{Binding Category}" FontSize="12" TextColor="#7F8C8D"/>

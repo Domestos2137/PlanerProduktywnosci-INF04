@@ -45,14 +45,14 @@ export class TaskEditComponent implements OnInit {
   }
 
   saveTask() {
-    if (this.task.id) {
-      this.taskService.updateTask(this.task.id, this.task).subscribe({
-        next: () => {
-          alert('Zadanie zostało zaktualizowane!');
-          this.router.navigate(['/tasks', this.task.id]); // Powrót do szczegółów
-        },
-        error: (err) => alert('Błąd podczas zapisu: ' + err.message)
-      });
+      if (this.task.id) {
+        this.taskService.updateTask(this.task.id, this.task).subscribe({
+          next: () => {
+            alert('Zadanie zostało zaktualizowane!');
+            this.router.navigate(['/']); 
+          },
+          error: (err) => alert('Błąd podczas zapisu: ' + err.message)
+        });
+      }
     }
-  }
 }

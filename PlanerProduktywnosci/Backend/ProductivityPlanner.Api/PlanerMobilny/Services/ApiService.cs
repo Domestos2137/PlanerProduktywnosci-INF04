@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using PlanerMobilny.Models; // Dopasuj do swojej przestrzeni nazw
+using PlanerMobilny.Models;
 
 namespace PlanerMobilny.Services;
 

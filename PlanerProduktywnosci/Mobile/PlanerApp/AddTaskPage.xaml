@@ -1,0 +1,19 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlanerApp.AddTaskPage"
+             Title="Nowe zadanie">
+
+    <VerticalStackLayout Spacing="15" Padding="20">
+        <Entry x:Name="TitleEntry" Placeholder="Tytuł zadania" />
+        <Editor x:Name="DescriptionEditor" Placeholder="Opis (opcjonalnie)" HeightRequest="100" />
+        <Entry x:Name="CategoryEntry" Placeholder="Kategoria (np. Dom, Praca)" />
+
+        <Label Text="Termin:" VerticalOptions="Center" />
+        <DatePicker x:Name="DueDatePicker" />
+
+        <Button Text="Dodaj zadanie" 
+                Clicked="OnSaveClicked" 
+                BackgroundColor="#2ECC71" 
+                TextColor="White" />
+    </VerticalStackLayout>
+</ContentPage>

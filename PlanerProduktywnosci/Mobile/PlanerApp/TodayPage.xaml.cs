@@ -50,4 +50,8 @@ public partial class TodayPage : ContentPage
             CountLabel.Text = tasks.Count(t => !t.IsDone).ToString();
         }
     }
+    private async void OnAddClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new AddTaskPage());
+    }
 }

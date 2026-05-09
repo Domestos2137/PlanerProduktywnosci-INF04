@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. DODANO ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TaskService } from '../../services/task.service';
-import { TodoTask } from '../../models/task.model'; // Upewnij się, że to Twoja ścieżka do modelu!
+import { TodoTask } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-detail',
@@ -12,12 +12,13 @@ import { TodoTask } from '../../models/task.model'; // Upewnij się, że to Twoj
 })
 export class TaskDetailComponent implements OnInit {
   task?: TodoTask;
-  isLoading: boolean = true; // Dodajemy flagę ładowania
+  isLoading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // 2. DODANO DO KONSTRUKTORA
   ) {}
 
   ngOnInit() {
@@ -26,17 +27,19 @@ export class TaskDetailComponent implements OnInit {
     if (id) {
       this.taskService.getTaskById(id).subscribe({
         next: (data) => {
-          console.log('Pobrano szczegóły:', data);
           this.task = data;
           this.isLoading = false;
+          this.cdr.detectChanges(); // 3. SZTURCHAMY WIDOK!
         },
         error: (err) => {
-          console.error('Błąd pobierania szczegółów:', err);
+          console.error('Błąd:', err);
           this.isLoading = false;
+          this.cdr.detectChanges(); // 3. SZTURCHAMY WIDOK!
         }
       });
     } else {
       this.isLoading = false;
+      this.cdr.detectChanges();
     }
   }
 

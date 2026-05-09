@@ -22,11 +22,11 @@
                    Margin="0,0,0,20"/>
 
             <Frame CornerRadius="10" Padding="0" HasShadow="False" BorderColor="#E0E0E0">
-                <Entry x:Name="EmailEntry" 
-                       Placeholder="Wpisz e-mail" 
-                       Keyboard="Email" 
-                       HeightRequest="45"
-                       Margin="10,0"/>
+                <Entry x:Name="UsernameEntry" 
+                   Placeholder="Wpisz nazwę użytkownika (Username)" 
+                   Keyboard="Default" 
+                   HeightRequest="45"
+                   Margin="10,0"/>
             </Frame>
 
             <Frame CornerRadius="10" Padding="0" HasShadow="False" BorderColor="#E0E0E0">

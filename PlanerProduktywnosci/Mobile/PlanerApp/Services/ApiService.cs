@@ -18,16 +18,21 @@ public class ApiService
         _httpClient = new HttpClient(handler);
     }
 
-    public async Task<bool> LoginAsync(string email, string password)
+    public async Task<bool> LoginAsync(string username, string password)
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/auth/login", new { Email = email, Password = password });
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/auth/login", new
+            {
+                Username = username,
+                Password = password
+            });
+
             return response.IsSuccessStatusCode;
         }
         catch
         {
-            return false; // Błąd połączenia
+            return false;
         }
     }
 

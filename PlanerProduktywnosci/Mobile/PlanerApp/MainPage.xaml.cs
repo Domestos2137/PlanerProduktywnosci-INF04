@@ -16,32 +16,34 @@ public partial class MainPage : ContentPage
     {
         SetLoadingState(true);
 
-        string email = EmailEntry.Text;
+        // Pobieramy tekst z UsernameEntry
+        string username = UsernameEntry.Text;
         string password = PasswordEntry.Text;
 
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            await DisplayAlert("Błąd", "Wprowadź login i hasło.", "OK");
+            await DisplayAlert("Błąd", "Wprowadź nazwę użytkownika i hasło.", "OK");
             SetLoadingState(false);
             return;
         }
 
         try
         {
-            bool isSuccess = await _apiService.LoginAsync(email, password);
+            bool isSuccess = await _apiService.LoginAsync(username, password);
 
             if (isSuccess)
             {
-                await DisplayAlert("Sukces", "Zalogowano pomyślnie!", "OK");
+                await DisplayAlert("Sukces", "Witaj w planerze!", "OK");
+                Application.Current.MainPage = new NavigationPage(new TodayPage());
             }
             else
             {
-                await DisplayAlert("Błąd logowania", "Nieprawidłowe dane lub serwer nie odpowiada.", "OK");
+                await DisplayAlert("Błąd logowania", "Niepoprawny użytkownik lub hasło.", "OK");
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Błąd krytyczny", $"Coś poszło nie tak: {ex.Message}", "OK");
+            await DisplayAlert("Błąd połączenia", "Nie udało się skontaktować z API.", "OK");
         }
         finally
         {

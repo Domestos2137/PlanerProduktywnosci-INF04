@@ -25,8 +25,9 @@ export class TaskListComponent implements OnInit {
       status: 'Nowe',
       priority: 'Normalny',
       category: 'Praca',
-      createdAt: new Date()
-    };
+      createdAt: new Date(),
+      dueDate: undefined
+  };
 
   constructor(
       private taskService: TaskService, 
@@ -79,7 +80,7 @@ export class TaskListComponent implements OnInit {
     }
 
   private resetForm(): void {
-    this.newTask = { title: '', description: '', status: 'Nowe', priority: 'Normalny', category: 'Praca', createdAt: new Date() };
+    this.newTask = { title: '', description: '', status: 'Nowe', priority: 'Normalny', category: 'Praca', createdAt: new Date(), dueDate: undefined };
   }
 
   get filteredTasks() {

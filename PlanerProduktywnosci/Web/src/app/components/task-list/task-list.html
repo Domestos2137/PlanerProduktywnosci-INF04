@@ -1,25 +1,55 @@
 <div class="container mt-4">
   <h2 class="text-primary mb-4">📋 Planer Produktywności</h2>
 
-  <div class="card mb-4 shadow-sm">
-    <div class="card-header bg-light"><strong>Dodaj nowe zadanie</strong></div>
-    <div class="card-body">
-      <div class="row g-2">
+  <div class="card mb-4 shadow-sm border-0">
+    <div class="card-header bg-dark text-white">
+      <strong>✨ Dodaj nowe zadanie</strong>
+    </div>
+    <div class="card-body bg-light">
+      <div class="row g-3">
+        <!-- Rząd 1: Główne informacje -->
         <div class="col-md-4">
-          <input type="text" class="form-control" placeholder="Tytuł zadania" [(ngModel)]="newTask.title">
+          <label class="small fw-bold">Tytuł</label>
+          <input type="text" class="form-control" placeholder="Co jest do zrobienia?" [(ngModel)]="newTask.title">
         </div>
-        <div class="col-md-4">
-          <input type="text" class="form-control" placeholder="Opis" [(ngModel)]="newTask.description">
+        <div class="col-md-5">
+          <label class="small fw-bold">Opis</label>
+          <input type="text" class="form-control" placeholder="Krótki opis (opcjonalnie)" [(ngModel)]="newTask.description">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <label class="small fw-bold">Termin</label>
+          <input type="date" class="form-control" [(ngModel)]="newTask.dueDate">
+        </div>
+
+        <!-- Rząd 2: Parametry -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Kategoria</label>
           <select class="form-select" [(ngModel)]="newTask.category">
             <option value="Praca">Praca</option>
             <option value="Dom">Dom</option>
             <option value="Inne">Inne</option>
           </select>
         </div>
-        <div class="col-md-2">
-          <button class="btn btn-success w-100" (click)="saveTask()">Zapisz</button>
+        <div class="col-md-3">
+          <label class="small fw-bold">Priorytet</label>
+          <select class="form-select" [(ngModel)]="newTask.priority">
+            <option value="Niski">Niski</option>
+            <option value="Normalny">Normalny</option>
+            <option value="Wysoki">Wysoki</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="small fw-bold">Status</label>
+          <select class="form-select" [(ngModel)]="newTask.status">
+            <option value="Nowe">Nowe</option>
+            <option value="W toku">W toku</option>
+            <option value="Gotowe">Gotowe</option>
+          </select>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-success w-100 fw-bold" (click)="saveTask()">
+            ➕ Dodaj zadanie
+          </button>
         </div>
       </div>
     </div>

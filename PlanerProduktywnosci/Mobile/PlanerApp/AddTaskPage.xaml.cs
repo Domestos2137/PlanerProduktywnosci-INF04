@@ -16,7 +16,7 @@ public partial class AddTaskPage : ContentPage
     {
         if (string.IsNullOrWhiteSpace(TitleEntry.Text))
         {
-            await DisplayAlert("B³¹d", "Tytu³ jest wymagany!", "OK");
+            await DisplayAlert("B³¹d", "Tytu³ nie mo¿e byæ pusty!", "OK");
             return;
         }
 
@@ -24,7 +24,7 @@ public partial class AddTaskPage : ContentPage
         {
             Title = TitleEntry.Text,
             Description = DescriptionEditor.Text,
-            Category = CategoryEntry.Text,
+            Category = CategoryPicker.SelectedItem?.ToString() ?? "inne",
             DueDate = DueDatePicker.Date,
             Status = "Nowe"
         };
@@ -33,11 +33,11 @@ public partial class AddTaskPage : ContentPage
 
         if (success)
         {
-            await Navigation.PopAsync(); 
+            await Navigation.PopAsync();
         }
         else
         {
-            await DisplayAlert("B³¹d", "Nie uda³o siê zapisaæ zadania", "OK");
+            await DisplayAlert("B³¹d", "Nie uda³o siê po³¹czyæ z baz¹ danych.", "OK");
         }
     }
 }

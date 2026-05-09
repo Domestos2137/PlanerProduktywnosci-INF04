@@ -3,8 +3,8 @@ import { TaskListComponent } from './components/task-list/task-list';
 import { LoginComponent } from './components/login/login';
 import { authGuard } from './guards/auth-guard';
 import { RegisterComponent } from './components/register/register';
-import { TaskDetailComponent } from './components/task-detail/task-detail'; // Musimy go stworzyć
-import { TaskEditComponent } from './components/task-edit/task-edit';     // Musimy go stworzyć
+import { TaskDetailComponent } from './components/task-detail/task-detail'; 
+import { TaskEditComponent } from './components/task-edit/task-edit';    
 
 export const routes: Routes = [
   { path: '', component: TaskListComponent, canActivate: [authGuard] },

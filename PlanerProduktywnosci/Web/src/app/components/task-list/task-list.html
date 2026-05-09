@@ -55,8 +55,48 @@
     </div>
   </div>
 
-  <div class="mb-3">
-    <input type="text" class="form-control" placeholder="🔍 Szukaj zadania lub kategorii..." [(ngModel)]="searchText">
+  <div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+      <span>🔍 Filtrowanie i wyszukiwanie</span>
+      <button class="btn btn-sm btn-light" (click)="clearFilters()">Wyczyść wszystko</button>
+    </div>
+    <div class="card-body bg-light">
+      <div class="row g-2">
+        <!-- Szukajka -->
+        <div class="col-md-4">
+          <label class="small fw-bold">Szukaj po nazwie/opisie</label>
+          <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Wpisz frazę...">
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-2">
+          <label class="small fw-bold">Status</label>
+          <select class="form-select" [(ngModel)]="filterStatus">
+            <option value="">Wszystkie</option>
+            <option value="Nowe">Nowe</option>
+            <option value="W toku">W toku</option>
+            <option value="Gotowe">Gotowe</option>
+          </select>
+        </div>
+
+        <!-- Kategoria -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Kategoria</label>
+          <select class="form-select" [(ngModel)]="filterCategory">
+            <option value="">Wszystkie</option>
+            <option value="Praca">Praca</option>
+            <option value="Dom">Dom</option>
+            <option value="Inne">Inne</option>
+          </select>
+        </div>
+
+        <!-- Data -->
+        <div class="col-md-3">
+          <label class="small fw-bold">Termin (konkretny dzień)</label>
+          <input type="date" class="form-control" [(ngModel)]="filterDate">
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row">

@@ -1,0 +1,47 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlanerApp.TodayPage"
+             Title="Zadania na dziś"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto, *">
+        <Frame Grid.Row="0" Margin="10" BackgroundColor="#3498DB" HasShadow="True" CornerRadius="15">
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Label Text="Pozostało:" TextColor="White" VerticalOptions="Center"/>
+                <Label x:Name="CountLabel" Text="0" TextColor="White" FontAttributes="Bold" FontSize="20"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <RefreshView Grid.Row="1" x:Name="RefreshTasks" Refreshing="OnRefreshRequested">
+            <CollectionView x:Name="TasksListView" Margin="10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,5" Padding="15" HasShadow="False" CornerRadius="10" BorderColor="#E0E0E0">
+                            <HorizontalStackLayout Spacing="15">
+                                <CheckBox IsChecked="{Binding IsDone}" 
+                                  Color="#3498DB" 
+                                  CheckedChanged="OnTaskStatusChanged" />
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="#2C3E50"/>
+                                    <Label Text="{Binding Category}" FontSize="12" TextColor="#7F8C8D"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <Button Grid.Row="1"
+            Text="+"
+            FontSize="24"
+            BackgroundColor="#3498DB"
+            TextColor="White"
+            CornerRadius="30"
+            WidthRequest="60"
+            HeightRequest="60"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="20"
+            Clicked="OnAddClicked" />
+    </Grid>
+</ContentPage>

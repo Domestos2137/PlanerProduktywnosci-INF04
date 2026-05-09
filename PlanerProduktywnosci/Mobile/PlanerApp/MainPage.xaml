@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlanerApp.MainPage"
+             BackgroundColor="#F5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" 
+                             Padding="30" 
+                             VerticalOptions="Center">
+
+            <Label Text="Planer Zadań" 
+                   FontSize="36" 
+                   HorizontalOptions="Center" 
+                   TextColor="#2C3E50" 
+                   FontAttributes="Bold" />
+
+            <Label Text="Zaloguj się do swojego konta" 
+                   FontSize="16" 
+                   HorizontalOptions="Center" 
+                   TextColor="#7F8C8D" 
+                   Margin="0,0,0,20"/>
+
+            <Frame CornerRadius="10" Padding="0" HasShadow="False" BorderColor="#E0E0E0">
+                <Entry x:Name="UsernameEntry" 
+                   Placeholder="Wpisz nazwę użytkownika (Username)" 
+                   Keyboard="Default" 
+                   HeightRequest="45"
+                   Margin="10,0"/>
+            </Frame>
+
+            <Frame CornerRadius="10" Padding="0" HasShadow="False" BorderColor="#E0E0E0">
+                <Entry x:Name="PasswordEntry" 
+                       Placeholder="Wpisz hasło" 
+                       IsPassword="True" 
+                       HeightRequest="45"
+                       Margin="10,0"/>
+            </Frame>
+
+            <Button x:Name="LoginButton"
+                    Text="Zaloguj się" 
+                    Clicked="OnLoginClicked" 
+                    BackgroundColor="#3498DB" 
+                    TextColor="White" 
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"/>
+
+            <ActivityIndicator x:Name="LoadingSpinner" 
+                               IsRunning="True" 
+                               IsVisible="False" 
+                               Color="#3498DB"
+                               HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

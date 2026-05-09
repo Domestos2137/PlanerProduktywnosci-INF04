@@ -1,25 +1,34 @@
-﻿namespace PlanerMobilny
+﻿using PlanerMobilny.Services;
+
+namespace PlanerMobilny;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    private readonly ApiService _apiService = new ApiService();
+
+    public MainPage()
     {
-        int count = 0;
-
-        public MainPage()
-        {
-            InitializeComponent();
-        }
-
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+        InitializeComponent();
     }
 
+    private async void OnLoginClicked(object sender, EventArgs e)
+    {
+        Loader.IsVisible = true;
+
+        string email = EmailEntry.Text;
+        string password = PasswordEntry.Text;
+
+        bool success = await _apiService.LoginAsync(email, password);
+
+        Loader.IsVisible = false;
+
+        if (success)
+        {
+            await Shell.Current.GoToAsync("//TaskListPage");
+        }
+        else
+        {
+            await DisplayAlert("Błąd", "Nieprawidłowe dane logowania", "OK");
+        }
+    }
 }

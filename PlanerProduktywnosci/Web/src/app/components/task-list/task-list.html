@@ -7,7 +7,6 @@
     </div>
     <div class="card-body bg-light">
       <div class="row g-3">
-        <!-- Rząd 1: Główne informacje -->
         <div class="col-md-4">
           <label class="small fw-bold">Tytuł</label>
           <input type="text" class="form-control" placeholder="Co jest do zrobienia?" [(ngModel)]="newTask.title">
@@ -21,7 +20,6 @@
           <input type="date" class="form-control" [(ngModel)]="newTask.dueDate">
         </div>
 
-        <!-- Rząd 2: Parametry -->
         <div class="col-md-3">
           <label class="small fw-bold">Kategoria</label>
           <select class="form-select" [(ngModel)]="newTask.category">
@@ -62,13 +60,11 @@
     </div>
     <div class="card-body bg-light">
       <div class="row g-2">
-        <!-- Szukajka -->
         <div class="col-md-4">
           <label class="small fw-bold">Szukaj po nazwie/opisie</label>
           <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Wpisz frazę...">
         </div>
 
-        <!-- Status -->
         <div class="col-md-2">
           <label class="small fw-bold">Status</label>
           <select class="form-select" [(ngModel)]="filterStatus">
@@ -79,7 +75,6 @@
           </select>
         </div>
 
-        <!-- Kategoria -->
         <div class="col-md-3">
           <label class="small fw-bold">Kategoria</label>
           <select class="form-select" [(ngModel)]="filterCategory">
@@ -90,7 +85,6 @@
           </select>
         </div>
 
-        <!-- Data -->
         <div class="col-md-3">
           <label class="small fw-bold">Termin (konkretny dzień)</label>
           <input type="date" class="form-control" [(ngModel)]="filterDate">

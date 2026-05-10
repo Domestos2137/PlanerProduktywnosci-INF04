@@ -46,7 +46,6 @@ namespace ProductivityPlanner.Desktop
             }
         }
 
-        // --- DODAWANIE ---
         private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNewTaskTitle.Text))
@@ -88,7 +87,6 @@ namespace ProductivityPlanner.Desktop
             catch (Exception ex) { MessageBox.Show("Błąd: " + ex.Message); }
         }
 
-        // --- WYPEŁNIANIE FORMULARZA PO KLIKNIĘCIU W TABELĘ ---
         private void dgTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgTasks.SelectedItem is TodoTask selected)
@@ -102,7 +100,6 @@ namespace ProductivityPlanner.Desktop
             }
         }
 
-        // --- AKTUALIZACJA (EDYCJA) ---
         private async void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (dgTasks.SelectedItem is TodoTask selected)
@@ -145,7 +142,6 @@ namespace ProductivityPlanner.Desktop
             }
         }
 
-        // --- USUWANIE ---
         private async void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (dgTasks.SelectedItem is TodoTask selected)
@@ -159,7 +155,6 @@ namespace ProductivityPlanner.Desktop
             }
         }
 
-        // --- WYSZUKIWANIE (W LOCIE) ---
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             string filter = txtSearch.Text.ToLower();
@@ -173,7 +168,6 @@ namespace ProductivityPlanner.Desktop
             }
         }
 
-        // --- EKSPORT DO CSV ---
         private void btnExportCSV_Click(object sender, RoutedEventArgs e)
         {
             var tasks = dgTasks.ItemsSource as List<TodoTask>;
@@ -201,7 +195,6 @@ namespace ProductivityPlanner.Desktop
         }
     }
 
-    // NASZ MODEL - IDEALNIE DOPASOWANY DO BACKENDU
     public class TodoTask
     {
         public int Id { get; set; }

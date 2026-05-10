@@ -20,7 +20,7 @@ export class LoginComponent {
       next: (token) => {
         this.authService.setToken(token);
         alert('Zalogowano pomyślnie!');
-        this.router.navigate(['/']); // Przekierowanie do listy zadań
+        this.router.navigate(['/']); 
       },
       error: (err) => alert('Błąd logowania: ' + err.error)
     });

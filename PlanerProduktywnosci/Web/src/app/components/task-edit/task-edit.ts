@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. DODANO
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -25,7 +25,7 @@ export class TaskEditComponent implements OnInit {
     private route: ActivatedRoute,
     private taskService: TaskService,
     private router: Router,
-    private cdr: ChangeDetectorRef // 2. DODANO DO KONSTRUKTORA
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class TaskEditComponent implements OnInit {
           if (this.task.dueDate) {
             this.task.dueDate = new Date(this.task.dueDate);
           }
-          this.cdr.detectChanges(); // 3. SZTURCHAMY WIDOK!
+          this.cdr.detectChanges();
         },
         error: (err) => console.error('Błąd ładowania zadania', err)
       });

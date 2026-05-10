@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-task-list',
   standalone: true, 
-  // 2. DODAJEMY RouterLink DO TABLICY IMPORTS:
   imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss'

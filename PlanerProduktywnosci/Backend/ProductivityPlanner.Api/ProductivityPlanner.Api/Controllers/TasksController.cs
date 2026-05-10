@@ -5,7 +5,6 @@ using ProductivityPlanner.Api.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-// Pamiętaj o dodaniu using dla folderu z Twoimi modelami i DataContextem!
 
 namespace ProductivityPlanner.Api.Controllers
 {
@@ -20,14 +19,12 @@ namespace ProductivityPlanner.Api.Controllers
             _context = context;
         }
 
-        // GET: api/tasks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoTask>>> GetTasks()
         {
             return await _context.Tasks.ToListAsync();
         }
 
-        // GET: api/tasks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoTask>> GetTask(int id)
         {
@@ -36,7 +33,6 @@ namespace ProductivityPlanner.Api.Controllers
             return task;
         }
 
-        // POST: api/tasks
         [HttpPost]
         public async Task<ActionResult<TodoTask>> PostTask(TodoTask task)
         {
@@ -46,7 +42,6 @@ namespace ProductivityPlanner.Api.Controllers
             return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
         }
 
-        // PUT: api/tasks/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask(int id, TodoTask task)
         {
@@ -73,10 +68,9 @@ namespace ProductivityPlanner.Api.Controllers
                 }
             }
 
-            return NoContent(); // Sukces (204 No Content)
+            return NoContent();
         }
 
-        // DELETE: api/tasks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {

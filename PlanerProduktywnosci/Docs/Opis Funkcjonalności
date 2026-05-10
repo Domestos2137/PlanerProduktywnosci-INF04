@@ -1,0 +1,10 @@
+Mobilna:
+Ekran logowania: Pierwszy punkt styku z użytkownikiem. Weryfikuje poświadczenia w bazie danych. Dopóki logowanie nie zakończy się sukcesem, dostęp do zadań jest zablokowany.
+
+Lista zadań (TodayPage): Dynamicznie pobiera dane z bazy przez API. Zawiera licznik zadań pozostałych do wykonania oraz funkcję "Pull-to-refresh".
+
+Formularz dodawania: Wykorzystuje kontrolkę Picker dla zachowania spójności danych w kategoriach. Waliduje, czy tytuł nie jest pusty.
+
+Checkbox Statusu: Każde kliknięcie checkboxa wysyła natychmiastowe żądanie typu PUT do API, aktualizując stan zadania w bazie danych w czasie rzeczywistym.
+
+Webowa:

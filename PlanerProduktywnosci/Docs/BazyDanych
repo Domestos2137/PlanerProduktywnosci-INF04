@@ -1,0 +1,13 @@
+Tabela: Users  Typ            Opis
+Id             INT(PK)        Klucz główny
+Username       VARCHAR        Unikalna nazwa użytkownika
+PasswordHash   VARCHAR        Zaszyfrowane hasło
+
+
+Tabela: TodoTasks	Typ	      Opis
+Id	                INT (PK)  Klucz główny
+Title	            VARCHAR	  Nazwa zadania
+Description	        TEXT	  Opcjonalny opis
+Status	            VARCHAR	  Stan (Nowe/Gotowe)
+Category	        VARCHAR	  dom / praca / inne
+DueDate	            DATETIME	Termin wykonania

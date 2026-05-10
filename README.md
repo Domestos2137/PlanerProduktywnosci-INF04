@@ -13,12 +13,14 @@ poprawny port (powinien i tak zawsze być localhost:5290)
 - Backend musi być w http
 - Przed włączeniem mobilnej/desktopowej uruchom Backend
 - Po uruchomieniu backendu, ustaw projekt desktopower/mobilnej jako startowy i uruchom
-
+(najlepiej stworzyć profil uruchamiania co włącza wszystko na raz)
 2. Webowa
 
 - Uruchom Backend w Visual Studio
 - Otwórz projekt najlepiej w Visual Studio Code
 - Otwórz terminal
-- Upewnij się że masz zainstalowanie wymagane składniki do uruchamiana angulara
+- Upewnij się że masz zainstalowanie wymagane składniki do uruchamiana angulara (npm install)
 - wpisz "cd PlanerProduktywności", a potem "cd Web"
 - Uruchom aplikację webową przez "ng serve"
+
+(do logowania można użyć User: "Test" pass: "123")

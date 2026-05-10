@@ -8,3 +8,55 @@ Formularz dodawania: Wykorzystuje kontrolkę Picker dla zachowania spójności d
 Checkbox Statusu: Każde kliknięcie checkboxa wysyła natychmiastowe żądanie typu PUT do API, aktualizując stan zadania w bazie danych w czasie rzeczywistym.
 
 Webowa:
+Aplikacja webowa została zbudowana jako jednostronicowa aplikacja (SPA) przy użyciu frameworka Angular. Oferuje pełen zakres operacji CRUD oraz zaawansowany system bezpieczeństwa.
+
+Moduł Autoryzacji i Bezpieczeństwa
+Rejestracja użytkowników (RegisterComponent): Umożliwia utworzenie nowego konta poprzez podanie nazwy użytkownika (username) oraz hasła. System waliduje kompletność danych przed wysłaniem ich do API.
+
+Logowanie (LoginComponent): Proces uwierzytelniania, który po sukcesie zwraca token autoryzacyjny. Token jest bezpiecznie przechowywany w pamięci przeglądarki (localStorage), co pozwala na podtrzymanie sesji.
+
+Ochrona tras (AuthGuard): Mechanizm zabezpieczający przed nieautoryzowanym dostępem. System sprawdza obecność tokena przed załadowaniem widoku zadań – w przypadku jego braku, użytkownik jest automatycznie przekierowywany do strony logowania.
+
+Wylogowanie: Funkcja usuwająca token z pamięci urządzenia, co skutkuje natychmiastowym zakończeniem sesji.
+
+Zarządzanie Zadaniami (CRUD)
+Wyświetlanie listy (TaskListComponent): Centralny widok aplikacji prezentujący wszystkie zadania użytkownika. Dane są pobierane asynchronicznie z serwera podczas inicjalizacji komponentu.
+
+Dodawanie zadań: Zintegrowany formularz na stronie głównej pozwala na szybkie tworzenie zadań z określeniem tytułu, opisu, priorytetu oraz kategorii.
+
+Edycja zadania (TaskEditComponent): Dedykowany widok umożliwiający modyfikację wszystkich parametrów istniejącego zadania, w tym daty zakończenia (dueDate) oraz statusu.
+
+Szczegóły zadania (TaskDetailComponent): Widok podglądu, który pozwala na odczytanie pełnego opisu i metadanych konkretnego zadania bez przechodzenia w tryb edycji.
+
+Usuwanie: Możliwość trwałego usunięcia zadania z bazy danych po uprzednim potwierdzeniu decyzji przez użytkownika w oknie dialogowym.
+
+Interakcja i UX
+Zaawansowane filtrowanie: Użytkownik może dynamicznie zawężać listę wyświetlanych zadań za pomocą:
+
+Wyszukiwarki tekstowej (przeszukuje tytuły i opisy).
+
+Filtra statusu (np. "Nowe", "W toku").
+
+Filtra kategorii (np. "Praca", "Dom").
+
+Filtra daty (wyświetlanie zadań na konkretny dzień).
+
+Dynamiczne odświeżanie widoku: Dzięki zastosowaniu mechanizmu ChangeDetectorRef, aplikacja natychmiastowo reaguje na zmiany w danych przychodzących z serwera, co zapewnia płynność działania bez konieczności odświeżania całej strony.
+
+Obsługa stanów ładowania: Podczas komunikacji z API system wyświetla wskaźniki ładowania (isLoading), informując użytkownika o trwającym procesie pobierania danych.
+
+Backend 
+Middleware CORS: Skonfigurowany, aby umożliwić komunikację z klientem Angularowym (DevPolicy).
+
+JWT Auth: Logika generowania tokenów o ważności 1 dnia, zawierających claims (nazwa użytkownika, rola).
+
+Walidacja: Wykorzystanie DataAnnotations ([Required], [MaxLength]) do sprawdzania poprawności danych na poziomie modelu.
+
+Aplikacja Desktopowa 
+Zarządzanie sesją: Przechowuje token JWT otrzymany przy logowaniu i dołącza go do każdego zapytania HttpClient.
+
+DataGrid Interaction: Automatyczne mapowanie danych z API do tabeli. Wybranie wiersza wypełnia formularz edycji (Binding).
+
+Filtrowanie: Wykorzystanie ICollectionView do natychmiastowego przeszukiwania listy bez ponownego pobierania danych z serwera.
+
+Moduł Raportowy: Implementacja StringBuilder do generowania pliku CSV, umożliwiająca otwieranie listy zadań w arkuszach kalkulacyjnych (np. Excel).

@@ -1,0 +1,18 @@
+Analiza wymagań
+Wymagania funkcjonalne:
+-System autoryzacji: Użytkownik może zalogować się za pomocą unikalnego loginu i hasła.
+
+-Zarządzanie zadaniami: Przeglądanie listy zadań przypisanych do użytkownika.
+
+-Dodawanie zadań: Możliwość tworzenia nowych zadań z określeniem tytułu, opisu, daty końcowej oraz kategorii.
+
+-Kategoryzacja: Stały zestaw kategorii: dom, praca, inne.
+
+-Aktualizacja statusu: Możliwość oznaczenia zadania jako wykonane bezpośrednio z listy głównej.
+
+Wymagania niefunkcjonalne:
+-Wieloplatformowość: Aplikacja działa na systemach Windows oraz Android (dzięki .NET MAUI).
+
+-Skalowalność: Architektura oparta na Web API pozwala na łatwe dołączenie innych klientów (np. aplikacji webowej).
+
+-Interfejs: Responsywny design dostosowany do urządzeń mobilnych.

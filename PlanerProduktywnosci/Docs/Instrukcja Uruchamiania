@@ -1,10 +1,3 @@
-# PlanerProduktywnosci-INF04
-Nazwa: Planer Produktywności
-Technologie: .NET 8, ASP.NET Core Web API, Entity Framework Core, SQL Server, .NET MAUI (Mobile/Desktop).
-Cel: System umożliwia użytkownikom efektywne zarządzanie codziennymi zadaniami poprzez wieloplatformową aplikację mobilną/desktopową połączoną z centralną bazą danych za pośrednictwem bezpiecznego interfejsu API.
-
-
-Instrukcja Uruchamiania:
 1. Backend/Mobilna/Desktop
 
 - Uruchom projekt w Visual Studio
@@ -22,5 +15,3 @@ poprawny port (powinien i tak zawsze być localhost:5290)
 - Upewnij się że masz zainstalowanie wymagane składniki do uruchamiana angulara (npm install)
 - wpisz "cd PlanerProduktywności", a potem "cd Web"
 - Uruchom aplikację webową przez "ng serve"
-
-(do logowania można użyć User: "Test" pass: "123")
